@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BASEURL } from "./const/const";
+import { BASEURL } from "../const/const";
 import Link from "next/link";
 
 export default async function Home() {

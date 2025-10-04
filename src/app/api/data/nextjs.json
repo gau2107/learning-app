@@ -3,80 +3,107 @@
   "data": [
     {
       "sequence": 1,
-      "title": "Next.js",
-      "description": "Next.js is a React framework that enables several extra features, including server-side rendering and generating static websites.",
-      "code": "import React from 'react';\nimport Head from 'next/head';\n\nconst Home = () => (\n  <div>\n    <Head>\n      <title>My Next.js App</title>\n    </Head>\n    <h1>Welcome to Next.js!</h1>\n  </div>\n);\n\nexport default Home;",
-      "tags": ["introduction"]
+      "title": "Next.js 15",
+      "description": "- **Turbopack Builds (Beta)**: Next.js now enables production builds using Turbopack, offering much faster development server start times and improved build performance. This feature is in beta and can be used with `next build --turbopack`.\n- **Stable Node.js Middleware**: Middleware leveraging Node.js runtime is now officially stable, allowing for flexible request handling and edge logic across the entire application."
+    },
+    {
+      "sequence": 1,
+      "title": "Next.js 14",
+      "description": "- **Turbopack Integration**: Local server startup is up to 53% faster, and code updates with Fast Refresh are up to 94% quicker using Turbopack (in RC status during 14.x).\n- **Server Actions (Stable)**: Mutations can be handled on the server and integrated natively with caching and form handling, enabling smoother, more scalable updates to app state.\n- **Enhanced Image Component**: The Next.js Image component now supports AVIF format, improved performance, and better integration with the Next.js ecosystem.\n- **Improved Analytics**: More detailed insights into application performance and user behavior with enhanced analytics features.\n- **Middleware Enhancements**: New capabilities for middleware, including better support for authentication and request handling."
+    },
+    {
+      "sequence": 1,
+      "title": "Next.js 13",
+      "description": "- **App Directory (Beta)**: A new way to structure your application with improved routing and layout capabilities.\n- **React Server Components (Beta)**: Experimental support for React Server Components, allowing for better data fetching and rendering strategies.\n- **Improved Image Optimization**: Enhanced image optimization features for faster loading times and better performance."
     },
     {
       "sequence": 2,
-      "title": "Setting Up a Next.js Project",
-      "description": "Learn how to create a new Next.js project using npx create-next-app.",
-      "code": "npx create-next-app my-app\ncd my-app\nnpm run dev",
+      "title": "Why Next.js Is Better Than React",
+      "description": "- **SEO Advantages**: Next.js pre-renders pages on the server, making content immediately visible to search engines, which significantly boosts discoverability and ranking.\n- **Performance**: Built-in server-side rendering and static site generation make Next.js sites faster to load than React-only client-rendered apps.\n- **Simplified Routing & Structure**: File-based routing removes the need for libraries like React Router, automating navigation and page setup.\n- **Built-in Optimizations**: Next.js automatically handles tasks like code splitting, optimized asset loading, and streaming server components, whereas with React, developers must configure these features manually.\n- **Full-Stack Support**: Next.js allows backend API routes, middleware, and real-time data updates within a single framework, making it suitable for both frontend and backend logic.\n- **Developer Experience**: Next.js offers conventions and tooling to streamline productivity, reducing boilerplate and configuration overhead compared to raw React, which favors total flexibility but demands more manual work.",
       "tags": ["setup", "getting-started"]
     },
+{
+  "sequence": 3,
+  "title": "Context Code Example",
+  "code": "// context/StateContext.js\nimport React, { createContext, useContext, useState } from 'react';\n\nconst StateContext = createContext();\n\nexport function StateProvider({ children, initialState }) {\n  const [state, setState] = useState(initialState || { user: null });\n\n  return (\n    <StateContext.Provider value={{ state, setState }}>\n      {children}\n    </StateContext.Provider>\n  );\n}\n\nexport const useStateContext = () => useContext(StateContext);\n\n// pages/_app.js\nimport { StateProvider } from '../context/StateContext';\n\nexport default function App({ Component, pageProps }) {\n  return (\n    <StateProvider initialState={pageProps.initialState}>\n      <Component {...pageProps} />\n    </StateProvider>\n  );\n}\n\n// pages/index.js\nimport { useStateContext } from '../context/StateContext';\n\nexport default function Home({ user }) {\n  const { state, setState } = useStateContext();\n\n  React.useEffect(() => {\n    setState({ user });\n  }, [user]);\n\n  return <div>Welcome, {state.user?.name || 'Guest'}</div>;\n}\n\nexport async function getServerSideProps() {\n  // Fetch user data server side\n  const user = { name: 'Alice', id: 1 };\n  return { props: { user, initialState: { user } } };\n}\n\n"
+
+},
+{
+  "sequence": 4,
+  "title": "React Redux Example",
+  "code": "npm install redux react-redux next-redux-wrapper\n\n// store/store.js\nimport { createStore } from 'redux';\n\nconst initialState = {\n  user: null,\n};\n\nfunction reducer(state = initialState, action) {\n  switch (action.type) {\n    case 'SET_USER':\n      return { ...state, user: action.payload };\n    default:\n      return state;\n  }\n}\n\nexport function initializeStore(preloadedState = initialState) {\n  return createStore(reducer, preloadedState);\n}\n\n// store/wrapper.js\nimport { createWrapper } from 'next-redux-wrapper';\nimport { initializeStore } from './store';\n\nexport const wrapper = createWrapper(initializeStore);\n\n// pages/_app.js\nimport { wrapper } from '../store/wrapper';\n\nfunction App({ Component, pageProps }) {\n  return <Component {...pageProps} />;\n}\n\nexport default wrapper.withRedux(App);\n // pages/index.js\nimport { useSelector } from 'react-redux';\nimport { wrapper } from '../store/wrapper';\n\nfunction Home() {\n  const user = useSelector((state) => state.user);\n\n  return <div>Welcome, {user?.name || 'Guest'}</div>;\n}\n\nexport const getServerSideProps = wrapper.getServerSideProps((store) => async () => {\n  const user = { name: 'Alice', id: 1 };\n  store.dispatch({ type: 'SET_USER', payload: user });\n\n  return { props: {} };\n});\n\nexport default Home;\n"
+},
+{
+  "sequence": 5,
+  "title": "SSR (Server-Side Rendering)",
+  "description": "•\tPages are rendered fresh on the server upon every request.\n•\tUse getServerSideProps to fetch data per request.\n•\tGood for dynamic data that changes every time.",
+  "code": "// pages/ssr.js\nexport default function SSRPage({ time }) {\n  return <div>Server time: {time}</div>;\n}\n\nexport async function getServerSideProps() {\n  // Runs on server on every request\n  return {\n    props: {\n      time: new Date().toISOString(),\n    },\n  };\n}\n"
+},
+{
+  "sequence": 6,
+  "title": "SSG (Static Site Generation)",
+  "description": "- Pages are built once at build time.\n- Use getStaticProps to fetch data at build time.\n- Fast since content is static.\n- Good for content that rarely changes.",
+  "code": "// pages/ssg.js\nexport default function SSGPage({ message }) {\n  return <div>Message: {message}</div>;\n}\n\nexport async function getStaticProps() {\n  // Runs at build time only\n  return {\n    props: {\n      message: 'This content is generated at build time',\n    },\n  };\n}\n"
+},
+{"sequence": 7,
+  "title": "ISR (Incremental Static Regeneration)",
+  "description": "- Combines SSG and SSR.\n- Use revalidate in getStaticProps to update static pages after interval.\n- Page regenerates in background on request after cache expires.\n- Good for frequently updated static content.",
+  "code": "// pages/isr.js\nexport default function ISRPage({ time }) {\n  return <div>Last generated at: {time}</div>;\n}\n\nexport async function getStaticProps() {\n  // Runs at build time and then every 10 seconds\n  return {\n    props: {\n      time: new Date().toISOString(),\n    },\n    revalidate: 10, // Regenerate page every 10 seconds\n  };\n}\n"
+},
+{
+  "sequence": 8,
+  "title": "CSR (Client-Side Rendering)",
+  "description": "• Data is fetched on the client after initial page load.\n• The page HTML may be minimal at first.\n• Use React hooks like useEffect to fetch data.\n• Good for user-specific or highly dynamic content.",
+  "code": "// pages/client.js\nimport React, { useEffect, useState } from 'react';\n\nexport default function ClientPage() {\n  const [time, setTime] = useState(null);\n\n  useEffect(() => {\n    setTime(new Date().toISOString());\n  }, []);\n\n  if (!time) return <p>Loading...</p>;\n\n  return <div>Client time: {time}</div>;\n}\n"
+},
+{
+  "sequence": 9,
+  "title": "Middleware",
+  "description": "Middleware in Next.js allows you to run code before a request is completed and can be used for tasks like authentication, logging, and more.",
+  "code": "// middleware.js\nimport { NextResponse } from 'next/server';\n\nexport function middleware(request) {\n  const { pathname } = request.nextUrl;\n\n  // Example: Protect /dashboard routes\n  if (pathname.startsWith('/dashboard')) {\n    const token = request.cookies.get('authToken');\n\n    if (!token) {\n      // Redirect unauthorized users to login\n      return NextResponse.redirect(new URL('/login', request.url));\n    }\n  }\n\n  // Continue request normally\n  return NextResponse.next();\n}\n\n// Apply middleware only to certain routes\nexport const config = {\n  matcher: ['/dashboard/:path*'],\n};\n"
+},
+{
+  "sequence": 12,
+  "title": "Route Announcements",
+  "description": "In addition to traditional page navigations, Next.js also supports client-side transitions for improved performance (using `next/link`). To ensure that client-side transitions are also announced to assistive technology, Next.js includes a route announcer by default.\n\nThe Next.js route announcer looks for the page name to announce by first inspecting `document.title`, then the `<h1>` element, and finally the URL pathname. For the most accessible user experience, ensure that each page in your application has a unique and descriptive title.",
+  "code": "<Head>\n  <title>Unique Page Title</title>\n</Head>\n\n<h1>Unique Page Title</h1>",
+  "tags": ["accessibility", "a11y", "seo"],
+  "reference": ["https://nextjs.org/docs/architecture/accessibility#route-announcements"]
+},
     {
-      "sequence": 3,
-      "title": "Pages and Routing",
-      "description": "Understand how Next.js handles routing with the pages directory.",
-      "code": "// pages/index.js\nimport React from 'react';\n\nexport default function Home() {\n  return <h1>Home Page</h1>;\n}\n\n// pages/about.js\nimport React from 'react';\n\nexport default function About() {\n  return <h1>About Page</h1>;\n}",
-      "tags": ["routing", "pages"]
+      "sequence": 13,
+      "title": "Linting",
+      "description": "Next.js provides an integrated **ESLint** experience out of the box, including custom rules for Next.js. By default, Next.js includes `eslint-plugin-jsx-a11y` to help catch accessibility issues early.\n\nFor example, this plugin helps ensure you add alt text to `img` tags, use correct `aria-*` attributes, use correct `role` attributes, and more.",
+      "tags": ["linting", "eslint"]
     },
     {
-      "sequence": 4,
-      "title": "Static Generation",
-      "description": "Explore static site generation (SSG) in Next.js for pre-rendering pages at build time.",
-      "code": "// pages/posts/[id].js\nimport { getStaticPaths, getStaticProps } from 'next';\n\nexport default function Post({ post }) {\n  return <div>{post.title}</div>;\n}\n\nexport async function getStaticPaths() {\n  // Logic to get paths\n}\n\nexport async function getStaticProps({ params }) {\n  // Fetch data\n}",
-      "tags": ["ssg", "pre-rendering"]
+      "sequence": 14,
+      "title": "Fast Refresh",
+      "description": "If you edit a file that only exports React component(s), **Fast Refresh** will update the code only for that file, and re-render your component. You can edit anything in that file, including styles, rendering logic, event handlers, or effects.\n\nIf you edit a file with exports that aren't React components, Fast Refresh will re-run both that file, and the other files importing it. So if both `Button.js` and `Modal.js` import `theme.js`, editing `theme.js` will update both components.\n\nFinally, if you edit a file that's imported by files outside of the React tree, Fast Refresh will fall back to doing a full reload. You might have a file which renders a React component but also exports a value that is imported by a non-React component. For example, maybe your component also exports a constant, and a non-React utility file imports it. In that case, consider migrating the constant to a separate file and importing it into both files. This will re-enable Fast Refresh to work. Other cases can usually be solved in a similar way.",
+      "tags": ["fast-refresh", "development"]
     },
     {
-      "sequence": 5,
-      "title": "Server-Side Rendering",
-      "description": "Learn about server-side rendering (SSR) to render pages on each request.",
-      "code": "// pages/posts/[id].js\nexport default function Post({ post }) {\n  return <div>{post.title}</div>;\n}\n\nexport async function getServerSideProps(context) {\n  const res = await fetch(`https://api.example.com/posts/${context.params.id}`);\n  const post = await res.json();\n  return { props: { post } };\n}",
-      "tags": ["ssr", "server-rendering"]
+      "sequence": 15,
+      "title": "Error handling (tips)",
+      "description": "**Fast Refresh** preserves React local state in function components (and Hooks) by default.\n\nSometimes you might want to force the state to be reset, and a component to be remounted. For example, this can be handy if you're tweaking an animation that only happens on mount. To do this, you can add `// @refresh reset` anywhere in the file you're editing. This directive is local to the file, and instructs Fast Refresh to remount components defined in that file on every edit.\n\nYou can put `console.log` or `debugger;` into the components you edit during development.\n\nRemember that imports are case sensitive. Both fast and full refresh can fail, when your import doesn't match the actual filename. For example, `./header` vs `./Header`.",
+      "tags": ["error-handling", "tips"]
     },
     {
-      "sequence": 6,
-      "title": "API Routes",
-      "description": "Create API endpoints in Next.js using the pages/api directory.",
-      "code": "// pages/api/hello.js\nexport default function handler(req, res) {\n  res.status(200).json({ message: 'Hello World' });\n}",
-      "tags": ["api", "backend"]
+      "sequence": 16,
+      "title": "Fast Refresh and Hooks",
+      "description": "Improved formatting and examples for highlighting code and important text in Markdown.\n\nUse fenced code blocks to get syntax highlighting (many renderers support a language hint):\n\n```js\n// Example: Fast Refresh causes hooks like useEffect to re-run on edit\nuseEffect(() => {\n  // effect logic\n}, []);\n```\n\nFor colored highlights and inline emphasis you can use HTML supported by many Markdown renderers:\n\n- Simple highlight using <mark>:\n\n<mark>This text is highlighted</mark>\n\n- Custom highlight with a CSS class (add the CSS in your app):\n\n```css\n.hl { background:#fffbcc; color:#111; padding:0 6px; border-radius:4px; }\n```\n\nThen in Markdown/MDX:\n\n<span class='hl'>Important: hooks may re-run during Fast Refresh</span>\n\nNotes:\n\n- Your renderer must allow raw HTML (MDX or many Markdown processors do).\n- For robust code coloring, integrate a highlighter like Prism or Highlight.js and use fenced blocks (` ```js `).\n- Keep effects resilient: Fast Refresh can re-run `useEffect` even with empty deps; design effects to tolerate occasional re-runs.\n",
+      "tags": ["fast-refresh", "hooks"]
     },
     {
-      "sequence": 7,
-      "title": "Styling with CSS Modules",
-      "description": "Use CSS Modules for scoped styling in Next.js components.",
-      "code": "// components/Button.module.css\n.button { background: blue; }\n\n// components/Button.js\nimport styles from './Button.module.css';\n\nexport default function Button() {\n  return <button className={styles.button}>Click me</button>;\n}",
-      "tags": ["styling", "css"]
+      "sequence": 17,
+      "title": "Next.js Compiler",
+      "description": "The Next.js Compiler, written in Rust using SWC, allows Next.js to transform and minify your JavaScript code for production. This replaces Babel for individual files and Terser for minifying output bundles. \n Compilation using the Next.js Compiler is 17x faster than Babel and enabled by default since Next.js version 12. If you have an existing Babel configuration or are using unsupported features, your application will opt-out of the Next.js Compiler and continue using Babel.",
+      "tags": ["documentation", "resources"]
     },
     {
-      "sequence": 8,
-      "title": "Image Optimization",
-      "description": "Optimize images automatically with Next.js Image component.",
-      "code": "import Image from 'next/image';\n\nexport default function Home() {\n  return (\n    <div>\n      <Image src='/image.jpg' alt='Example' width={500} height={300} />\n    </div>\n  );\n}",
-      "tags": ["images", "optimization"]
-    },
-    {
-      "sequence": 9,
-      "title": "Environment Variables",
-      "description": "Manage environment variables in Next.js for different environments.",
-      "code": "// .env.local\nAPI_KEY=your_api_key\n\n// pages/api/data.js\nexport default function handler(req, res) {\n  res.status(200).json({ key: process.env.API_KEY });\n}",
-      "tags": ["environment", "config"]
-    },
-    {
-      "sequence": 10,
-      "title": "Deployment to Vercel",
-      "description": "Deploy your Next.js app to Vercel for easy hosting.",
-      "code": "npm install -g vercel\nvercel --prod",
-      "tags": ["deployment", "vercel"]
-    },
-    {
-      "sequence": 11,
-      "title": "Custom Document",
-      "description": "Customize the HTML document structure with _document.js.",
-      "code": "// pages/_document.js\nimport Document, { Html, Head, Main, NextScript } from 'next/document';\n\nclass MyDocument extends Document {\n  render() {\n    return (\n      <Html>\n        <Head />\n        <body>\n          <Main />\n          <NextScript />\n        </body>\n      </Html>\n    );\n  }\n}\n\nexport default MyDocument;",
-      "tags": ["document", "customization"]
+      "sequence": 18,
+      "title": "SWC",
+      "description": "SWC (Speedy Web Compiler) is a Rust-based platform for the next generation of JavaScript tooling. It is designed to be a drop-in replacement for Babel, offering faster compilation times and improved performance. SWC is used internally by Next.js to transform and optimize JavaScript code."
     }
   ],
   "message": "Next JS data fetched successfully"
