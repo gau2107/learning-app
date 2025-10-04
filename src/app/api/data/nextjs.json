@@ -1,0 +1,83 @@
+{
+  "status": "success",
+  "data": [
+    {
+      "sequence": 1,
+      "title": "Next.js",
+      "description": "Next.js is a React framework that enables several extra features, including server-side rendering and generating static websites.",
+      "code": "import React from 'react';\nimport Head from 'next/head';\n\nconst Home = () => (\n  <div>\n    <Head>\n      <title>My Next.js App</title>\n    </Head>\n    <h1>Welcome to Next.js!</h1>\n  </div>\n);\n\nexport default Home;",
+      "tags": ["introduction"]
+    },
+    {
+      "sequence": 2,
+      "title": "Setting Up a Next.js Project",
+      "description": "Learn how to create a new Next.js project using npx create-next-app.",
+      "code": "npx create-next-app my-app\ncd my-app\nnpm run dev",
+      "tags": ["setup", "getting-started"]
+    },
+    {
+      "sequence": 3,
+      "title": "Pages and Routing",
+      "description": "Understand how Next.js handles routing with the pages directory.",
+      "code": "// pages/index.js\nimport React from 'react';\n\nexport default function Home() {\n  return <h1>Home Page</h1>;\n}\n\n// pages/about.js\nimport React from 'react';\n\nexport default function About() {\n  return <h1>About Page</h1>;\n}",
+      "tags": ["routing", "pages"]
+    },
+    {
+      "sequence": 4,
+      "title": "Static Generation",
+      "description": "Explore static site generation (SSG) in Next.js for pre-rendering pages at build time.",
+      "code": "// pages/posts/[id].js\nimport { getStaticPaths, getStaticProps } from 'next';\n\nexport default function Post({ post }) {\n  return <div>{post.title}</div>;\n}\n\nexport async function getStaticPaths() {\n  // Logic to get paths\n}\n\nexport async function getStaticProps({ params }) {\n  // Fetch data\n}",
+      "tags": ["ssg", "pre-rendering"]
+    },
+    {
+      "sequence": 5,
+      "title": "Server-Side Rendering",
+      "description": "Learn about server-side rendering (SSR) to render pages on each request.",
+      "code": "// pages/posts/[id].js\nexport default function Post({ post }) {\n  return <div>{post.title}</div>;\n}\n\nexport async function getServerSideProps(context) {\n  const res = await fetch(`https://api.example.com/posts/${context.params.id}`);\n  const post = await res.json();\n  return { props: { post } };\n}",
+      "tags": ["ssr", "server-rendering"]
+    },
+    {
+      "sequence": 6,
+      "title": "API Routes",
+      "description": "Create API endpoints in Next.js using the pages/api directory.",
+      "code": "// pages/api/hello.js\nexport default function handler(req, res) {\n  res.status(200).json({ message: 'Hello World' });\n}",
+      "tags": ["api", "backend"]
+    },
+    {
+      "sequence": 7,
+      "title": "Styling with CSS Modules",
+      "description": "Use CSS Modules for scoped styling in Next.js components.",
+      "code": "// components/Button.module.css\n.button { background: blue; }\n\n// components/Button.js\nimport styles from './Button.module.css';\n\nexport default function Button() {\n  return <button className={styles.button}>Click me</button>;\n}",
+      "tags": ["styling", "css"]
+    },
+    {
+      "sequence": 8,
+      "title": "Image Optimization",
+      "description": "Optimize images automatically with Next.js Image component.",
+      "code": "import Image from 'next/image';\n\nexport default function Home() {\n  return (\n    <div>\n      <Image src='/image.jpg' alt='Example' width={500} height={300} />\n    </div>\n  );\n}",
+      "tags": ["images", "optimization"]
+    },
+    {
+      "sequence": 9,
+      "title": "Environment Variables",
+      "description": "Manage environment variables in Next.js for different environments.",
+      "code": "// .env.local\nAPI_KEY=your_api_key\n\n// pages/api/data.js\nexport default function handler(req, res) {\n  res.status(200).json({ key: process.env.API_KEY });\n}",
+      "tags": ["environment", "config"]
+    },
+    {
+      "sequence": 10,
+      "title": "Deployment to Vercel",
+      "description": "Deploy your Next.js app to Vercel for easy hosting.",
+      "code": "npm install -g vercel\nvercel --prod",
+      "tags": ["deployment", "vercel"]
+    },
+    {
+      "sequence": 11,
+      "title": "Custom Document",
+      "description": "Customize the HTML document structure with _document.js.",
+      "code": "// pages/_document.js\nimport Document, { Html, Head, Main, NextScript } from 'next/document';\n\nclass MyDocument extends Document {\n  render() {\n    return (\n      <Html>\n        <Head />\n        <body>\n          <Main />\n          <NextScript />\n        </body>\n      </Html>\n    );\n  }\n}\n\nexport default MyDocument;",
+      "tags": ["document", "customization"]
+    }
+  ],
+  "message": "Next JS data fetched successfully"
+}

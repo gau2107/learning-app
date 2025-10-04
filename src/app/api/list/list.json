@@ -1,0 +1,30 @@
+{
+  "status": "success",
+  "data": [{
+    "sequence": 1,
+    "title": "Next.js",
+    "icon": "https://simpleicons.org/icons/nextdotjs.svg",
+    "route": "/nextjs"
+  }, {
+    "sequence": 2,
+    "title": "React",
+    "icon": "https://simpleicons.org/icons/react.svg",
+    "route": "/react"
+  }, {
+    "sequence": 3,
+    "title": "TypeScript",
+    "icon": "https://simpleicons.org/icons/typescript.svg",
+    "route": "/typescript"
+  }, {
+    "sequence": 4,
+    "title": "Tailwind CSS",
+    "icon": "https://simpleicons.org/icons/tailwindcss.svg",
+    "route": "/tailwindcss"
+  }, {
+    "sequence": 5,
+    "title": "JavaScript",
+    "icon": "https://simpleicons.org/icons/javascript.svg",
+    "route": "/javascript"
+  }],
+  "message": "List fetched successfully"
+}
