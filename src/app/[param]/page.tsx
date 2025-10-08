@@ -1,9 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { BASEURL } from '../../const/const'
 import { Highlight, themes } from 'prism-react-renderer'
 import ReactMarkdown from 'react-markdown'
+
+interface ListItem {
+  title: string;
+  description: string;
+  code?: string;
+}
 
 export default function Param({ params }: { params: Promise<{ param: string }> }) {
   const [param, setParam] = useState<string>('')
@@ -21,12 +27,12 @@ export default function Param({ params }: { params: Promise<{ param: string }> }
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
 
-  const [list, setList] = useState<any>([]);
+  const [list, setList] = useState<ListItem[]>([]);
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50
 
-  const changeIndex = (newIndex: number) => {
+  const changeIndex = useCallback((newIndex: number) => {
     if (newIndex !== currentIndex && newIndex >= 0 && newIndex < list.length) {
       setIsTransitioning(true)
       setTimeout(() => {
@@ -34,7 +40,7 @@ export default function Param({ params }: { params: Promise<{ param: string }> }
         setIsTransitioning(false)
       }, 80) // Very quick transition
     }
-  }
+  }, [currentIndex, list.length])
 
 
   useEffect(() => {
@@ -82,7 +88,7 @@ export default function Param({ params }: { params: Promise<{ param: string }> }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [currentIndex, list.length])
+  }, [currentIndex, list.length, changeIndex])
 
   return (
     <div
@@ -99,7 +105,7 @@ export default function Param({ params }: { params: Promise<{ param: string }> }
         {list[currentIndex]?.code && (
           <div className="code-section text-sm p-2 rounded mb-4 text-left whitespace-pre-wrap break-all overflow-x-hidden overflow-y-auto max-h-[80vh] bg-gray-800 rounded-md" onTouchStart={(e) => e.stopPropagation()} onTouchMove={(e) => e.stopPropagation()} onTouchEnd={(e) => e.stopPropagation()}>
             <Highlight theme={themes.vsDark} code={list[currentIndex]?.code || ''} language="javascript">
-              {({ className, style, tokens, getLineProps, getTokenProps }) => (
+              {({ style, tokens, getLineProps, getTokenProps }) => (
                 <pre style={{ ...style, background: 'transparent', padding: 0, margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-all', overflowX: 'hidden' }}>
                   {tokens.map((line, i) => (
                     <div key={i} {...getLineProps({ line })}>
