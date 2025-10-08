@@ -5,7 +5,16 @@ import { BASEURL } from '../../const/const'
 import { Highlight, themes } from 'prism-react-renderer'
 import ReactMarkdown from 'react-markdown'
 
-export default function Param() {
+export default function Param({ params }: { params: Promise<{ param: string }> }) {
+  const [param, setParam] = useState<string>('')
+
+  useEffect(() => {
+    async function getParams() {
+      const resolvedParams = await params;
+      setParam(resolvedParams.param);
+    }
+    getParams();
+  }, [params])
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [touchStart, setTouchStart] = useState<number | null>(null)
@@ -30,12 +39,13 @@ export default function Param() {
 
   useEffect(() => {
     async function getList() {
-      const resp = await fetch(`${BASEURL}/api/data`);
+      if (!param) return; // Don't fetch if param is not yet available
+      const resp = await fetch(`${BASEURL}/api/data/${param}`);
       const data = await resp.json();
       setList([...data.data]);
     }
     getList();
-  }, [])
+  }, [param])
 
 
 

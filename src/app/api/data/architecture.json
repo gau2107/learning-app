@@ -1,0 +1,64 @@
+{
+  "data": [
+    {
+      "sequence": 1,
+      "title": "What is RADIO about?",
+      "description": "- Requirements exploration: Understand the problem thoroughly and determine the scope by asking a number of clarifying questions\n- Architecture / High-level design: Identify the key components of the product and how they are related to each other\n- Data model / Core entities: Describe the core entities and its data – the fields each entity contains and which component(s) they belong to\n- Interface definition (API): Define the interface (API) between components in the product, functionality of each API, their parameters and responses\n- Optimizations and deep dive: Discuss possible optimization opportunities and specific areas of interest when building the product"
+    },
+    {
+      "sequence": 2,
+      "title": "Webpack module federation",
+      "description": "Module Federation is a feature in Webpack 5 that allows multiple independent builds to share and consume code at runtime. It enables the creation of micro frontends, where different parts of a web application can be developed, deployed, and updated independently. With Module Federation, you can dynamically load and execute code from other applications or libraries without the need for a full rebuild or redeployment. This promotes code reuse, reduces duplication, and allows teams to work autonomously on different parts of a larger application."
+    },
+    {
+      "sequence": 3,
+      "title": "Hydration and rehydration",
+      "description": "### Hydration\n\nHydration converts server-rendered HTML into a fully interactive client-side application. After SSR sends static HTML, the client attaches event listeners and initializes JavaScript components so UI elements become interactive.\n\n### Rehydration\n\nRehydration refers to restoring application state when returning to or reloading a page (for example, restoring form values, scroll position, and component state) so the app appears as it did before."
+    },
+    {
+      "sequence": 4,
+      "title": "States",
+      "description": "Q1: What is \"state\" in a frontend application?\n\nA: State is the data that determines the UI and behavior at a given time (user input, fetched data, component visibility). It changes over time and drives re-rendering.\n\nQ2: What are controlled vs uncontrolled components?\n\nA: Controlled components have their value/state managed by the app via props and callbacks. Uncontrolled components rely on the DOM's internal state and are accessed via refs.\n\nQ3: How do you share state between sibling components?\n\nA: Lift the shared state to the nearest common ancestor and pass it down via props or use context so siblings share a single source of truth.\n\nQ4: What are best practices for local state?\n\nA: Keep state minimal and normalized, use local state for UI-only concerns, use selectors/memoization to avoid unnecessary renders, and adopt libraries when complexity grows."
+    },
+    {
+      "sequence": 4,
+      "title": "States - 2",
+      "description": "Q5: What state management libraries have you used and how do they work?\n\nA: Redux centralizes state in a store; actions and reducers describe updates and middleware handles side effects. MobX uses observables and reactions for reactive updates. React Query and SWR manage server state with caching and background refetching.\n\nQ6: How do you handle asynchronous state updates such as API calls?\n\nA: Manage loading, success, and error states explicitly. Use hooks/effects with cancellation or libraries like React Query, SWR, or RTK Query to handle fetching, caching, retries, and background updates.\n\nQ7: What problems arise from poor state management?\n\nA: Inconsistent UI, race conditions, duplicated or stale data, hard-to-maintain code, and performance issues.\n\nQ8: How can you scale state management in large applications?\n\nA: Modularize state into feature-specific slices/modules, combine reducers/stores, use selectors and memoization, and define clear ownership and data flow boundaries.\n\nQ9: Summary of best practices:\n\nA: Keep state minimal and normalized, derive state when possible, prefer local state for small scopes, plan for async flows, and choose patterns/libraries that match app complexity."
+    },
+    {
+      "sequence": 3,
+      "title": "XSS attacks",
+      "description": "Cross-Site Scripting (XSS) attacks are a type of security vulnerability that occurs when an attacker injects malicious scripts into a trusted website or web application. These scripts are then executed in the context of the victim's browser, allowing the attacker to steal sensitive information, manipulate the website's content, or perform actions on behalf of the user. XSS attacks can be classified into three main types: Stored XSS, Reflected XSS, and DOM-based XSS. To prevent XSS attacks, developers should implement input validation, output encoding, and use security headers like Content Security Policy (CSP)."
+    },
+    {
+      "sequence": 4,
+      "title": "CORS",
+      "description": "Cross-Origin Resource Sharing (CORS) is a security feature implemented by web browsers that allows or restricts web applications running on one origin (domain) to make requests to resources on a different origin. By default, web browsers enforce the Same-Origin Policy, which prevents web pages from making requests to a different domain for security reasons. CORS provides a way for servers to specify which origins are allowed to access their resources by including specific HTTP headers in the server's response. When a web application makes a cross-origin request, the browser sends an HTTP OPTIONS request (preflight request) to the server to check if the actual request is safe to send. If the server allows the request, it responds with the appropriate CORS headers, and the browser proceeds with the actual request. CORS is essential for enabling secure interactions between web applications and APIs hosted on different domains."
+    },
+    {
+      "sequence": 5,
+      "title": "CSRF attacks",
+      "description": "Cross-Site Request Forgery (CSRF) attacks are a type of security vulnerability where an attacker tricks a user into performing unwanted actions on a web application in which they are authenticated. The attacker typically does this by crafting a malicious link or form that, when clicked or submitted by the user, sends a request to the target web application with the user's credentials. Since the user is already authenticated, the web application processes the request as if it were legitimate, potentially leading to unauthorized actions such as changing account settings, making purchases, or transferring funds. To prevent CSRF attacks, developers can implement measures such as using anti-CSRF tokens, checking the Referer header, and enforcing same-site cookies."
+    },
+    {
+      "sequence": 6,
+      "title": "Progressive Web Apps (PWAs)",
+      "description": "Progressive Web Apps (PWAs) are web applications that leverage modern web technologies to provide a user experience similar to native mobile apps. PWAs are designed to be reliable, fast, and engaging, regardless of the user's network conditions. Key features of PWAs include:\n\n1. Responsive Design: PWAs are built to work seamlessly on various devices and screen sizes.\n\n2. Offline Functionality: PWAs can function offline or with limited connectivity using service workers to cache resources and data.\n\n3. App-like Experience: PWAs offer an app-like experience with smooth animations, navigation, and interactions.\n\n4. Installable: Users can install PWAs on their home screen without going through an app store.\n\n5. Push Notifications: PWAs can send push notifications to engage users and keep them informed.\n\n6. Secure: PWAs are served over HTTPS to ensure data integrity and security.\n\nOverall, PWAs provide a cost-effective way to deliver a high-quality user experience across multiple platforms."
+    },
+    {
+      "sequence": 7,
+      "title": "RBAC",
+      "description": "Role-Based Access Control (RBAC) is a security model that restricts system access based on the roles assigned to users within an organization. In RBAC, permissions are associated with roles, and users are assigned to one or more roles, thereby inheriting the permissions associated with those roles. This approach simplifies the management of user permissions by grouping them into roles, making it easier to enforce access control policies. Key concepts of RBAC include:\n\n1. Roles: A role represents a set of permissions that define what actions a user can perform within the system.\n\n2. Users: Users are individuals who interact with the system and are assigned to one or more roles.\n\n3. Permissions: Permissions are specific actions or operations that can be performed on resources within the system.\n\n4. Sessions: A session represents a user's active interaction with the system, during which they can assume one or more roles.\n\nRBAC is widely used in various applications and systems to enhance security, streamline access management, and ensure that users have the appropriate level of access based on their responsibilities."
+    },
+    {
+      "sequence": 8,
+      "title": "Optimistic updates",
+      "description": "Optimistic update is a performance technique where the client immediately reflect the updated state after a user interaction that hits the server and optimistically assume that the server request succeeds, which should be the case for most requests. This gives users instant feedback and improves the perceived performance. If the server request fails, we can revert the UI changes and display an error message."
+    },
+    {
+      "sequence": 9,
+      "title": "Server-Sent Events (SSE)",
+      "description": "SSE is a standard web technology that enables servers to push updates to web clients over a single HTTP connection. It's a simple and efficient mechanism for real-time updates, particularly well-suited for scenarios where updates are initiated by the server"
+    }
+  ]
+}
