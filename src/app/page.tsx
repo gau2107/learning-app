@@ -1,6 +1,9 @@
+'use client'
+
 import Image from "next/image";
 import { BASEURL } from "../const/const";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 interface ListData {
   sequence: number;
@@ -9,18 +12,49 @@ interface ListData {
   icon: string;
 }
 
-// Force dynamic rendering to avoid build-time fetch errors
-export const dynamic = 'force-dynamic';
+export default function Home() {
+  const [list, setList] = useState<ListData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-export default async function Home() {
+  useEffect(() => {
+    async function fetchList() {
+      try {
+        const resp = await fetch(`${BASEURL}/api/list`);
+        if (!resp.ok) {
+          throw new Error(`Failed to fetch list: ${resp.status}`);
+        }
+        const data = await resp.json();
+        setList(data.data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load data');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchList();
+  }, []);
 
-  const resp = await fetch(`${BASEURL}/api/list`);
-  const list = await resp.json();    
+  if (loading) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24">
+        <div className="text-xl">Loading...</div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24">
+        <div className="text-xl text-red-500">Error: {error}</div>
+      </main>
+    );
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 w-full max-w-6xl">
-      {list.data.map((obj: ListData) => (
+      {list.map((obj: ListData) => (
         <Link
           href={`${obj.route}`}
         key={obj.sequence}

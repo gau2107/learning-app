@@ -46,9 +46,17 @@ export default function Param({ params }: { params: Promise<{ param: string }> }
   useEffect(() => {
     async function getList() {
       if (!param) return; // Don't fetch if param is not yet available
-      const resp = await fetch(`${BASEURL}/api/data/${param}`);
-      const data = await resp.json();
-      setList([...data.data]);
+      try {
+        const resp = await fetch(`${BASEURL}/api/data/${param}`);
+        if (!resp.ok) {
+          throw new Error(`HTTP error! status: ${resp.status}`);
+        }
+        const data = await resp.json();
+        setList([...data.data]);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+        // Optionally set an error state or retry
+      }
     }
     getList();
   }, [param])
