@@ -3,37 +3,37 @@
   "data": [{
     "sequence": 1,
     "title": "Next.js",
-    "icon": "https://simpleicons.org/icons/nextdotjs.svg",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
     "route": "/nextjs"
   }, {
     "sequence": 2,
     "title": "Frontend Architecture",
-    "icon": "https://simpleicons.org/icons/nextdotjs.svg",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
     "route": "/architecture"
   },{
     "sequence": 20,
     "title": "Redux",
-    "icon": "https://simpleicons.org/icons/nextdotjs.svg",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg",
     "route": "/redux"
   }, {
     "sequence": 3,
     "title": "React",
-    "icon": "https://simpleicons.org/icons/react.svg",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
     "route": "/react"
   }, {
     "sequence": 4,
     "title": "TypeScript",
-    "icon": "https://simpleicons.org/icons/typescript.svg",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
     "route": "/typescript"
   }, {
     "sequence": 5,
     "title": "Tailwind CSS",
-    "icon": "https://simpleicons.org/icons/tailwindcss.svg",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
     "route": "/tailwindcss"
   }, {
     "sequence": 6,
     "title": "JavaScript",
-    "icon": "https://simpleicons.org/icons/javascript.svg",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
     "route": "/javascript"
   }],
   "message": "List fetched successfully"
