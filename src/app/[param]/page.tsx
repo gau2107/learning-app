@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { BASEURL } from '../../const/const'
 import { Highlight, themes } from 'prism-react-renderer'
 import ReactMarkdown from 'react-markdown'
+import PageTransition from '../../components/PageTransition'
 
 interface ListItem {
   title: string;
@@ -99,12 +100,13 @@ export default function Param({ params }: { params: Promise<{ param: string }> }
   }, [currentIndex, list.length, changeIndex])
 
   return (
-    <div
-      className="flex flex-col items-center h-screen bg-black text-white overflow-hidden pt-0 touch-none"
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-    >
+    <PageTransition>
+      <div
+        className="flex flex-col items-center h-screen bg-black text-white overflow-hidden pt-0 touch-none"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
       <div className={`text-center p-4 max-w-[800px] transition-opacity duration-75 ease-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
         <h1 className="text-2xl font-bold mb-2">{list[currentIndex]?.title}</h1>
         <div className="text-sm mb-2 text-left">
@@ -134,5 +136,6 @@ export default function Param({ params }: { params: Promise<{ param: string }> }
         {currentIndex + 1} / {list.length}
       </div>
     </div>
+    </PageTransition>
   )
 }
